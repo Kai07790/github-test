@@ -40,5 +40,5 @@ models:
     staging:
       +materialized: view
 
-    mart:
+    marts:
       +materialized: table
