@@ -2,15 +2,18 @@ version: 2
 
 models:
   - name: stg_jaffle_shop__customers
-    description: The grain of this table is one unique customer per row.
+    description: Cleaned customer records from the Jaffle Shop application, with one row per customer. This model is the canonical customer input for downstream transformations.
     columns:
       - name: customer_id
-        description: Primary key for the customers table
+        description: Primary key and stable identifier for the customer, renamed from the source `id` field.
         data_tests:
           - unique
           - not_null
       - name: first_name
+        description: Customer's given name as recorded in the Jaffle Shop application.
       - name: last_name
+        description: Customer's family name as recorded in the Jaffle Shop application.
+
 
   - name: stg_jaffle_shop__orders
     description: One order per row
