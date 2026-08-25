@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: stg_stripe__payment
+    description: Cleaned Stripe payment records with one row per payment attempt. Amounts are converted from source cents to dollars for downstream analysis.
+    columns:
+      - name: payment_id
+        description: Primary key for the payment attempt, renamed from the source `id` field.
+        data_tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: Order associated with the payment attempt, renamed from the source `orderid` field.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_jaffle_shop__orders')
+                field: order_id
+      - name: payment_method
+        description: Payment instrument used for the attempt, renamed from the source `paymentmethod` field.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - bank_transfer
+                  - coupon
+                  - credit_card
+                  - gift_card
+      - name: payment_status
+        description: Outcome of the payment attempt, renamed from the source `status` field.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - success
+                  - fail
+      - name: payment_dollar_amount
+        description: Payment amount in dollars, converted from the source amount stored in cents.
+      - name: payment_date
+        description: Timestamp when the payment attempt was created, renamed from the source `created` field.
+      - name: _batched_at
+        description: Timestamp when the source record was loaded into the warehouse.
