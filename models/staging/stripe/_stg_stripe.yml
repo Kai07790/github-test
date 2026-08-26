@@ -35,7 +35,7 @@ models:
                 values:
                   - success
                   - fail
-      - name: payment_dollar_amount
+      - name: amount
         description: Payment amount in dollars, converted from the source amount stored in cents.
       - name: payment_date
         description: Timestamp when the payment attempt was created, renamed from the source `created` field.
